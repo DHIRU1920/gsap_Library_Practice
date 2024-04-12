@@ -1,0 +1,6 @@
+1) mouse rectanle or aaya ki nhi aur move huwa ki nhi
+2) calculate hum centre se left pr hai ya center se right pe hai
+3) ye calculate karo hum center kisna left pr hai jitna left hai utni intencity se colour lagao
+
+
+problem :- colour ( range 255 tk h range hoti hai) rectangle pr equally split hona jaruri hai
