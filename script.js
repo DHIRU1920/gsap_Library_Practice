@@ -1,28 +1,44 @@
-var rect = document.querySelector("#center");
+ const throttleFunction = (func, delay) => {
 
-rect.addEventListener("mousemove",(details)=>{
-
-    var rectangleLocation = rect.getBoundingClientRect();
-    var insideRectVal = details.clientX - rectangleLocation.left;
-
-    if (insideRectVal<rectangleLocation.width/2){
-        var redColour = gsap.utils.mapRange(0, rectangleLocation.width/2,255,0,insideRectVal);
-        gsap.to(rect,{
-            backgroundColor :`rgb(${redColour},0,0)`,
-           
-        });
+    let prev = 0;
+    return (...args) => {
+        let now = new Date().getTime();
+        console.log(now - prev, delay);
+        if (now - prev > delay) {
+            prev = now;
+            return func(...args);
+        }
     }
-    else{
-        var blueColour = gsap.utils.mapRange(rectangleLocation.width/2,rectangleLocation.width,0,255,insideRectVal);
-        gsap.to(rect,{
-            backgroundColor :`rgb(0,0,${blueColour})`,
-            
-        });
-    }
-    rect.addEventListener("mouseleave",()=>{
-        gsap.to(rect,{
-            backgroundColor: "white"
-        });
-    })
-});
+}
+document.querySelector("#center")
+.addEventListener("mousemove",
+    throttleFunction((dets) => {
 
+      
+      var div = document.createElement("div")
+      div.classList.add("imagediv");
+      div.style.left = dets.clientX  + "px"
+      div.style.top = dets.clientY + "px";
+
+      var img = document.createElement("img");
+      img.setAttribute("src", "./bg.jpg")
+      div.appendChild(img);
+      
+      gsap.to(img,{
+         y:"0",
+         duration:.2,
+      })
+
+      gsap.to(img,{
+         y:"100",
+         delay:.6,
+      })
+
+
+      document.body.appendChild(div);
+      setTimeout(() => {
+         div.remove();
+      }, 2000);
+
+      
+    }, 200));
